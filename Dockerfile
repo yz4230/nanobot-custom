@@ -1,4 +1,4 @@
-FROM rust:bookworm AS gws-builder
+FROM rust:bookworm AS bin-builder
 
 RUN cargo install --git https://github.com/googleworkspace/cli --locked
 
@@ -19,6 +19,9 @@ USER root
 RUN uv pip install --system --no-cache discord.py
 COPY --from=gws-builder /usr/local/cargo/bin/gws /usr/local/bin/gws
 COPY --from=skill-downloader /cloned/cli/skills /app/nanobot/skills
+
+# Install again to bundle additional skills
+RUN uv pip install --system --no-cache .
 
 USER nanobot
 
