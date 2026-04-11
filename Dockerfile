@@ -14,11 +14,14 @@ RUN git clone --depth 1 https://github.com/googleworkspace/cli.git
 
 FROM nanobot
 
+RUN mkdir -p /home/nanobot/.config/gws
+COPY --from=bin-builder /usr/local/cargo/bin/gws /usr/local/bin/gws
+COPY --from=skill-downloader /cloned/cli/skills /app/nanobot/skills
+
 USER root
 
+# Install discord.py for supporting the Discord channel
 RUN uv pip install --system --no-cache discord.py
-COPY --from=gws-builder /usr/local/cargo/bin/gws /usr/local/bin/gws
-COPY --from=skill-downloader /cloned/cli/skills /app/nanobot/skills
 
 # Install again to bundle additional skills
 RUN uv pip install --system --no-cache .
