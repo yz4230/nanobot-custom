@@ -1,8 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-docker run -d \
-  --name nanobot-gw \
+docker run \
   --restart unless-stopped \
   -v ~/.nanobot:/home/nanobot/.nanobot \
   --entrypoint /bin/bash \
