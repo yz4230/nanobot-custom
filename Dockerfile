@@ -12,7 +12,7 @@ RUN git clone --depth 1 https://github.com/googleworkspace/cli.git
 
 # ---
 
-FROM nanobot
+FROM ghcr.io/yz4230/nanobot-base:latest
 
 COPY --from=bin-builder /usr/local/cargo/bin/gws /usr/local/bin/gws
 COPY --from=skill-downloader /cloned/cli/skills /app/nanobot/skills
