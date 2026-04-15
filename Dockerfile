@@ -14,7 +14,6 @@ RUN git clone --depth 1 https://github.com/googleworkspace/cli.git
 
 FROM nanobot
 
-RUN mkdir -p /home/nanobot/.config/gws
 COPY --from=bin-builder /usr/local/cargo/bin/gws /usr/local/bin/gws
 COPY --from=skill-downloader /cloned/cli/skills /app/nanobot/skills
 
@@ -25,6 +24,8 @@ RUN uv pip install --system --no-cache discord.py
 
 # Install again to bundle additional skills
 RUN uv pip install --system --no-cache .
+
+ENV GOOGLE_WORKSPACE_CLI_CONFIG_DIR=/home/nanobot/.nanobot/credentials/gws
 
 USER nanobot
 
